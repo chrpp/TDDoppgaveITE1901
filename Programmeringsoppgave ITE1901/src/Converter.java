@@ -1,22 +1,52 @@
 
 public class Converter {
 	final static int MAX_BIT_STRING_LENGTH = 24;
+	final static int MAX_HEX_STRING_LENGTH = 6;
 
 	public Converter() {
 	}
 	
 	/**
-	 * Returns an integer value representation of bitString.
+	 * Returns a bit string representation of bitwise and between two strings
 	 * 
-	 * @param 	bitString	String to be converted 	
-	 * @return	int			Integer value representation of bitString
+	 * @param 	bitString1	the first string argument	
+	 * @param 	bitString2	the second string argument
+	 * @return	a 24 char bit string representing the result of (bitString1 & bitString2)  				
+	 */
+	public static String bitwiseANDBitStrings(String bitString1, String bitString2) {
+		
+		return intToBits(bitsToInt(bitString1) & bitsToInt(bitString2));		
+	}
+	
+	/**
+	 * Returns a bit string representation of bitwise or between two strings
+	 * 
+	 * @param 	bitString1	the first string argument	
+	 * @param 	bitString2	the second string argument
+	 * @return	a 24 char bit string representing the result of (bitString1 | bitString2)  				
+	 */
+	public static String bitwiseORBitStrings(String bitString1, String bitString2) {
+		
+		return intToBits(bitsToInt(bitString1) | bitsToInt(bitString2));		
+	}
+	
+	/**
+	 * Returns an integer value representation of a string containing 0s and 1s.
+	 * 
+	 * @param 	bitString	string to be converted 	
+	 * @return	integer value representation of bitString
 	 */
 	public static int bitsToInt(String bitString) {
 		int intValueOfBits = 0;
+		int exp = 0;
 		
 		if (isValidBitString(bitString)) 				
-			for (int i = bitString.length() - 1; i >= 0; i--) 
-				intValueOfBits += bitString.charAt(i) == '1' ? Math.pow(2, i) : 0; 			
+			for (int pos = 0; pos < bitString.length(); pos++) {
+				exp = (bitString.length() - 1) - pos;  
+				intValueOfBits += 
+						bitString.charAt(pos) == '1' ? Math.pow(2, exp) : 0; // Math.pow(2, exp) determines the 
+																		     // value of the bit at position pos
+			}
 		return intValueOfBits;
 	}
 
@@ -36,6 +66,81 @@ public class Converter {
 			bitString += (((intValue&mask) == mask) ? 1 : 0); 
 		}
 		return bitString;
+	}
+	
+	/**
+	 * Returns a hex string representation of intValue by performing bitwise AND 
+	 * between intValue and a moving mask, starting at the MSB in intValue and moving right.
+	 * Only the 24 MSB of intValue will be represented in the bit string.
+	 * 
+	 * @param 	intValue	integer value to be converted to string of bits
+	 * @return  hexString	string representation of in intValue
+	 */
+	public static String intToHex(int intValue) {
+		
+		String hexString = "";
+		String hexAsBits = ""; 
+		
+		String bitString = intToBits(intValue);
+		System.out.println(bitString);
+		
+		for (int i = 0; i < MAX_BIT_STRING_LENGTH; i += 4) {
+			hexAsBits = bitString.substring(i, i + 4);
+			System.out.println(hexAsBits);
+			switch (bitsToInt(hexAsBits)) {
+				case 15 : hexString += 'F'; break;
+				case 14 : hexString += 'E'; break;
+				case 13 : hexString += 'D'; break;
+				case 12 : hexString += 'C'; break;
+				case 11 : hexString += 'B'; break;
+				case 10 : hexString += 'A'; break;
+				default : hexString += bitsToInt(hexAsBits);
+			}
+		}
+		System.out.println(hexString);
+		return hexString;
+	}
+	
+	/**
+	 * Returns an integer value representation of a string containing hex characters.
+	 * 
+	 * @param 	hexString 		string of hex chars to be converted
+	 * @return	intValueOfHex	integer representation of the hex string
+	 */
+	public static int hexToInt(String hexString) {
+		int intValueOfHex = 0;
+		
+		if (isValidHexString(hexString))			
+			for (int i = hexString.length() - 1; i >= 0; i--) {
+				switch (Character.toLowerCase(hexString.charAt(i))) {
+					case 'a' : {intValueOfHex += 10 * Math.pow(16, i); break;}
+					case 'b' : {intValueOfHex += 11 * Math.pow(16, i); break;}
+					case 'c' : {intValueOfHex += 12 * Math.pow(16, i); break;}
+					case 'd' : {intValueOfHex += 13 * Math.pow(16, i); break;}
+					case 'e' : {intValueOfHex += 14 * Math.pow(16, i); break;}
+					case 'f' : {intValueOfHex += 15 * Math.pow(16, i); break;}
+					default : {intValueOfHex += (hexString.charAt(i) - 48) * Math.pow(16, i);} // UTF-8 value of 0 is 48
+				}
+			}
+		return intValueOfHex;
+	}
+	
+	/**
+	 * Checks if hexString contains valid chars only and length of bitString is less or 
+	 * equal to MAX_HEX_STRING_LENGTH.
+	 * 
+	 * @param 	hexString	string of hex to be verified
+	 * @return 	true 		if hexString contains only valid chars and bitString length <= MAX_BIT_HEX_LENGTH
+	 */
+	private static boolean isValidHexString(String hexString) {
+		String validChars = "[a-fA-F0-9]*"; // valid chars in hexString 
+		
+		if (hexString.length() > MAX_HEX_STRING_LENGTH)
+			throw new IllegalArgumentException("Argument string invalid: lenght greater than 6 chars");
+		else if (!hexString.matches(validChars))
+			throw new IllegalArgumentException("Argument string invalid: invalid char in string, only hex chars permitted");
+		else
+			return true;
 	}
 	
 	/**
