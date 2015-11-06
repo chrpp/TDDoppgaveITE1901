@@ -74,10 +74,9 @@ public class Converter {
 	 * Only the 24 MSB of intValue will be represented in the bit string.
 	 * 
 	 * @param 	intValue	integer value to be converted to string of bits
-	 * @return  hexString	string representation of in intValue
+	 * @return  hex string representation of in intValue
 	 */
 	public static String intToHex(int intValue) {
-		
 		String hexString = "";
 		String hexAsBits = ""; 
 		

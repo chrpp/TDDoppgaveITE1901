@@ -114,7 +114,7 @@ public class ConverterTest {
 	public void hexToInt_GivenHexStringWithInvalidChar_ShouldThrowIllegalArgumentException() {
 		expException.expect(IllegalArgumentException.class);
 		expException.expectMessage("Argument string invalid: invalid char in string, only hex chars permitted");
-		String invalidCharInHexString = "0101G"; // String contains invalid char (g)
+		String invalidCharInHexString = "0101G"; // String contains invalid char (G)
 		Converter.hexToInt(invalidCharInHexString);
 	}
 	
