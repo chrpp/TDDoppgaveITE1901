@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,14 +5,16 @@ import java.util.Map;
 
 
 public class Collector {
-	private Map<String, ProcessedDataSet> data = new HashMap<String, ProcessedDataSet>(); // Data structure for storing of processed data
-	private List<String> log = new ArrayList<String>(); // A log containing duplicate measurements and data with invalid operation
-	private FileHandler fileHandler;
+	private Map<String, ProcessedDataSet> data; // Data structure for storing of processed data
+	private List<String> log ; // A log containing duplicate measurements and data with invalid operation specified
+	private FileHandler fileHandler; // Provides file related operations
 	private final static String BITWISE_AND = "1";
 	private final static String BITWISE_OR = "2";
 
 	public Collector(FileHandler fileHandler) {
 		this.fileHandler = fileHandler;
+		data = new HashMap<String, ProcessedDataSet>();
+		log = new ArrayList<String>();
 	}
 	
 	// open file for reading
@@ -79,20 +80,21 @@ public class Collector {
 				isValidDataSet);
 	}
 	
-	public void storeProcessedData(ProcessedDataSet processedDataElement) {
+	public void storeProcessedData(ProcessedDataSet processedDataSet) {
 		//Check if data set is invalid or data set contains duplicate measurement ID
-		if ((processedDataElement.getIsValidDataSet() != true) || 
-				(data.putIfAbsent(processedDataElement.getMeasurementID(), processedDataElement) != null)) {
+		if ((processedDataSet.getIsValidDataSet() != true) || 
+				(data.containsKey(processedDataSet.getMeasurementID()))) {
 
-				// Invalid dataset OR method putIfAbsent returned null ergo duplicate measurement ID, create log entry with measurement data
-				String logEntry = 
-						processedDataElement.getMeasurementID() + " " + 
-								processedDataElement.getOperator() + " " +
-								processedDataElement.getBitString1() + " " +
-								processedDataElement.getBitString2();
-				log.add(logEntry);
-				System.out.println("Added to log: " + logEntry);
-			}
+			// Create log entry with measurement data and add to log
+			String logEntry = 
+					processedDataSet.getMeasurementID() + " " + 
+							processedDataSet.getOperator() + " " +
+							processedDataSet.getBitString1() + " " +
+							processedDataSet.getBitString2();
+			log.add(logEntry);
+		}
+		else
+			data.put(processedDataSet.getMeasurementID(), processedDataSet);
 	}
 	
 	

@@ -9,14 +9,10 @@ public class ProcessedDataSet {
 	private int bitString2AsInt;
 	private int processedResultAsInt;
 	private boolean isValidDataSet;
-
-	public ProcessedDataSet() {
-	}
 	
 	public ProcessedDataSet(String measurementID, String operator, String bitString1, String bitString2,
 			String processedResultAsBitString, int bitString1AsInt,
 			int bitString2AsInt, int processedResultAsInt, boolean isValidDataSet) {
-		//super();
 		this.measurementID = measurementID;
 		this.operator = operator;
 		this.bitString1 = bitString1;
@@ -27,6 +23,8 @@ public class ProcessedDataSet {
 		this.processedResultAsInt = processedResultAsInt;
 		this.isValidDataSet = isValidDataSet;
 	}
+	
+	// Get methods
 	
 	public String getMeasurementID() {
 		return measurementID;
@@ -63,5 +61,4 @@ public class ProcessedDataSet {
 	public boolean getIsValidDataSet() {
 		return isValidDataSet;
 	}
-	
 }
