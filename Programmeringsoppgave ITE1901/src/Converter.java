@@ -1,4 +1,12 @@
 
+/**
+ * Utility class providing methods for converting between bit strings, hex strings and integer value.
+ * Also determines the bitwise AND and OR between two bit strings, and determines if a hex string or 
+ * a bit string i valid based on string length and content. 
+ * 
+ * @author Christian Petersen
+ *
+ */
 public class Converter {
 	final static int MAX_BIT_STRING_LENGTH = 24;
 	final static int MAX_HEX_STRING_LENGTH = 6;
@@ -81,11 +89,9 @@ public class Converter {
 		String hexAsBits = ""; 
 		
 		String bitString = intToBits(intValue);
-		System.out.println(bitString);
 		
 		for (int i = 0; i < MAX_BIT_STRING_LENGTH; i += 4) {
 			hexAsBits = bitString.substring(i, i + 4);
-			System.out.println(hexAsBits);
 			switch (bitsToInt(hexAsBits)) {
 				case 15 : hexString += 'F'; break;
 				case 14 : hexString += 'E'; break;
@@ -96,7 +102,6 @@ public class Converter {
 				default : hexString += bitsToInt(hexAsBits);
 			}
 		}
-		System.out.println(hexString);
 		return hexString;
 	}
 	

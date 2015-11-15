@@ -1,13 +1,18 @@
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
-import java.io.BufferedReader;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 
+/**
+ * A class for testing of the Collector class.
+ * 
+ * @author Christian Petersen
+ *
+ */
 public class CollectorTest {
 	private Collector collector;
 	private FileHandler mockFileHandler;
@@ -45,11 +50,11 @@ public class CollectorTest {
 	}
 	
 	@Test
-	public void isOpenForReading_GivenFileOpenedForReading_ShouldReturnTrue() {
+	public void openFileForReading_GivenFileOpenedForReading_ShouldReturnTrue() {
 		//mockFileHandler = mock(FileHandler.class);
 		//Collector collector = new Collector(mockFileHandler);
 		when(mockFileHandler.openFileForReading("validFile")).thenReturn(true);
-		assertThat(collector.isOpenForReading("validFile"), is(true));
+		assertThat(collector.openFileForReading("validFile"), is(true));
 		//verify(mockFileHandler, times(1)).openFileForReading("validFile");
 	}
 	

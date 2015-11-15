@@ -1,4 +1,9 @@
-
+/**
+ * A class for modeling a processed measurement data set.
+ * 
+ * @author Christian Petersen
+ *
+ */
 public class ProcessedDataSet {
 	private String measurementID;
 	private String operator;
@@ -10,6 +15,19 @@ public class ProcessedDataSet {
 	private int processedResultAsInt;
 	private boolean isValidDataSet;
 	
+	/**
+	 * Constructs ProcessedDataSet object.
+	 * 
+	 * @param measurementID					string representation of a 6 digit hex value representing the measurement ID
+	 * @param operator						operation to be performed on bitString1 and bitString2, "1" for bitwise and, "2" for bitwise or
+	 * @param bitString1					measurement data 1 as a bit string
+	 * @param bitString2					measurement data 2 as a bit string
+	 * @param processedResultAsBitString	the result as a bit string after specified operation has been performed on the data 
+	 * @param bitString1AsInt				measurement data 1 as an integer
+	 * @param bitString2AsInt				measurement data 2 as an integer
+	 * @param processedResultAsInt			the result as an integer after specified operation has been performed on the data
+	 * @param isValidDataSet				true if data set species a valid operator, else false 
+	 */
 	public ProcessedDataSet(String measurementID, String operator, String bitString1, String bitString2,
 			String processedResultAsBitString, int bitString1AsInt,
 			int bitString2AsInt, int processedResultAsInt, boolean isValidDataSet) {

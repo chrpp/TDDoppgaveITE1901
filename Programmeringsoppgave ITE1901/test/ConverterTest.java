@@ -1,13 +1,16 @@
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-
-
+/**
+ * Class for testing the Converter class.
+ * 
+ * @author Christian Petersen
+ *
+ */
 public class ConverterTest {
 	String bitString1;
 	int intValue;
