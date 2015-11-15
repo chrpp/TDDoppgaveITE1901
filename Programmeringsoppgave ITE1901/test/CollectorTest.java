@@ -34,8 +34,6 @@ public class CollectorTest {
 	public void readDataFromFile_GivenIllegalNumOfArgumentsRead_ShouldThrowIllegalArgumentException() {
 		expException.expect(IllegalArgumentException.class);
 		expException.expectMessage("Argument string invalid: incorrect number of arguments");
-		//mockFileHandler = mock(FileHandler.class);
-		//Collector collector = new Collector(mockFileHandler);
 		String[] invalidArgsArray = new String[1]; // An array length not equal to 4 is invalid
 		when(mockFileHandler.readLine()).thenReturn(invalidArgsArray);
 		collector.readDataFromFile();
@@ -43,16 +41,12 @@ public class CollectorTest {
 	
 	@Test
 	public void readDataFromFile_GivenCorrectNumOfArgumentsRead_ShouldReturnStringArrayOfDataRead() {
-		//mockFileHandler = mock(FileHandler.class);
-		//Collector collector = new Collector(mockFileHandler);
 		when(mockFileHandler.readLine()).thenReturn(dataSet1);
 		assertThat(collector.readDataFromFile(), equalTo(dataSet1));
 	}
 	
 	@Test
 	public void openFileForReading_GivenFileOpenedForReading_ShouldReturnTrue() {
-		//mockFileHandler = mock(FileHandler.class);
-		//Collector collector = new Collector(mockFileHandler);
 		when(mockFileHandler.openFileForReading("validFile")).thenReturn(true);
 		assertThat(collector.openFileForReading("validFile"), is(true));
 		//verify(mockFileHandler, times(1)).openFileForReading("validFile");
@@ -60,11 +54,8 @@ public class CollectorTest {
 	
 	@Test
 	public void isEndOfFile_GivenMoreDataToRead_ShouldReturnFalse() {
-		//mockFileHandler = mock(FileHandler.class);
-		//Collector collector = new Collector(mockFileHandler);
 		when(mockFileHandler.hasMoreData()).thenReturn(false);
 		assertThat(collector.isEndOfFile(), is(false));
-		//verify(mockFileHandler, times(1)).openFileForReading("validFile");
 	}
 	
 	@Test
