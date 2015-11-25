@@ -77,15 +77,15 @@ public class Converter {
 	}
 	
 	/**
-	 * Returns a hex string representation of intValue by performing bitwise AND 
-	 * between intValue and a moving mask, starting at the MSB in intValue and moving right.
-	 * Only the 24 MSB of intValue will be represented in the bit string.
+	 * Returns a hex string representation of intValue by first converting intValue to 
+	 * a bit string. It then converts groups of four bits into its corresponding integer value
+	 * which is then converted into is corresponding hex string representation. 
 	 * 
 	 * @param 	intValue	integer value to be converted to string of bits
 	 * @return  hex string representation of in intValue
 	 */
 	public static String intToHex(int intValue) {
-		String hexString = "";
+		StringBuilder hexString = new StringBuilder();
 		String hexAsBits = ""; 
 		
 		String bitString = intToBits(intValue);
@@ -93,16 +93,16 @@ public class Converter {
 		for (int i = 0; i < MAX_BIT_STRING_LENGTH; i += 4) {
 			hexAsBits = bitString.substring(i, i + 4);
 			switch (bitsToInt(hexAsBits)) {
-				case 15 : hexString += 'F'; break;
-				case 14 : hexString += 'E'; break;
-				case 13 : hexString += 'D'; break;
-				case 12 : hexString += 'C'; break;
-				case 11 : hexString += 'B'; break;
-				case 10 : hexString += 'A'; break;
-				default : hexString += bitsToInt(hexAsBits);
+				case 15 : hexString.append('F'); break;
+				case 14 : hexString.append('E'); break;
+				case 13 : hexString.append('D'); break;
+				case 12 : hexString.append('C'); break;
+				case 11 : hexString.append('B'); break;
+				case 10 : hexString.append('A'); break;
+				default : hexString.append(bitsToInt(hexAsBits));
 			}
 		}
-		return hexString;
+		return hexString.toString();
 	}
 	
 	/**
